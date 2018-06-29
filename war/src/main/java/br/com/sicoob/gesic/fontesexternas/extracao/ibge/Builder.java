@@ -4,6 +4,7 @@ import br.com.sicoob.gesic.fontesexternas.extracao.AbstractBuilder;
 import br.com.sicoob.gesic.fontesexternas.parser.ibge.IBGEParser;
 import java.net.URL;
 import javax.naming.OperationNotSupportedException;
+import br.com.sicoob.infraestrutura.log.SicoobLoggerPadrao;
 
 /**
  * Realiza o download do arquivo do "Produto interno bruto dos municipios".
@@ -11,7 +12,7 @@ import javax.naming.OperationNotSupportedException;
  * @author Rogerio Alves Rodrigues
  */
 public class Builder extends AbstractBuilder {
-
+  
   private String url;
 
   /**
@@ -32,17 +33,21 @@ public class Builder extends AbstractBuilder {
   }
 
   /**
-   * {@inheritDoc
+   * {@inheritDoc}
    */
   @Override
   public String extrairArquivo() throws OperationNotSupportedException {
 		try {
 			// faz o download do arquivo
-    	URL url = new URL(this.url);
+      downloadArquivoFtp(this.url);
 		} catch(Exception excecao) {
-			
+      SicoobLoggerPadrao
+        .getInstance(Builder.class)
+        .alerta(
+          excecao,
+          "Erro ao realizar o download do arquivo!"
+      );
 		}
-    
     
     return "";
   }

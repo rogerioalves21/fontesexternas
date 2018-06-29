@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import javax.naming.OperationNotSupportedException;
@@ -117,7 +118,7 @@ public abstract class AbstractBuilder {
 
       // abre o inputstream da conexao http
       try (InputStream inputStream = httpConn.getInputStream()) {
-        String saveFilePath = Constantes.PASTA_INPUT_TESTE.getValor().concat(File.separator + fileName);
+        String saveFilePath = Constantes.PASTA_INPUT.getValor().concat(File.separator + fileName);
 
         // abre o outputstream do arquivo salvo
         try (FileOutputStream outputStream = new FileOutputStream(saveFilePath)) {
@@ -163,7 +164,7 @@ public abstract class AbstractBuilder {
 
       // abre o inputstream da conexao http
       try (InputStream inputStream = httpConn.getInputStream()) {
-        String saveFilePath = Constantes.PASTA_INPUT_TESTE.getValor().concat(File.separator + fileName.replaceAll(".ZIP", sufixo));
+        String saveFilePath = Constantes.PASTA_INPUT.getValor().concat(File.separator + fileName.replaceAll(".ZIP", sufixo));
 
         // abre o outputstream do arquivo salvo
         try (FileOutputStream outputStream = new FileOutputStream(saveFilePath)) {
@@ -181,6 +182,30 @@ public abstract class AbstractBuilder {
     }
     httpConn.disconnect();
   }
+  
+  protected void downloadArquivoFtp(String fileURL) throws IOException {
+    // faz o download do arquivo
+    URL url = new URL(fileURL);
+    URLConnection httpConn = url.openConnection();
+    InputStream inputStream = httpConn.getInputStream();
+    
+    String fileName = fileURL.substring(fileURL.lastIndexOf("/") + 1, fileURL.length());
+    String saveFilePath = Constantes.PASTA_INPUT.getValor().concat(File.separator + fileName);
+
+    // abre o outputstream do arquivo salvo
+    FileOutputStream outputStream = new FileOutputStream(saveFilePath);
+      int bytesRead = -1;
+      byte[] buffer = new byte[BUFFER_SIZE];
+      while ((bytesRead = inputStream.read(buffer)) != -1) {
+        outputStream.write(buffer, 0, bytesRead);
+      }
+    outputStream.close();
+    inputStream.close();
+    
+    // descompacta o arquivo
+    this.descompactador.descompactar(Constantes.PASTA_INPUT.getValor().concat(fileName),
+            Constantes.PASTA_INPUT.getValor(), StandardCharsets.ISO_8859_1);
+  }
 
   /**
    * Descompacta o arquivo zip.
@@ -189,8 +214,8 @@ public abstract class AbstractBuilder {
    * @throws java.io.IOException Erro ao converter o arquivo.
    */
   protected void descompactar(String nomeArquivo) throws IOException {
-    this.descompactador.descompactar(Constantes.PASTA_INPUT_TESTE.getValor().concat(nomeArquivo),
-            Constantes.PASTA_INPUT_TESTE.getValor(), StandardCharsets.ISO_8859_1);
+    this.descompactador.descompactar(Constantes.PASTA_INPUT.getValor().concat(nomeArquivo),
+            Constantes.PASTA_INPUT.getValor(), StandardCharsets.ISO_8859_1);
     converterParaCsv(nomeArquivo);
   }
 
@@ -202,8 +227,11 @@ public abstract class AbstractBuilder {
    * @throws java.io.IOException Erro ao converter o arquivo.
    */
   protected void descompactar(String nomeArquivo, String sufixo) throws IOException {
-    this.descompactador.descompactar(Constantes.PASTA_INPUT_TESTE.getValor().concat(nomeArquivo),
-            Constantes.PASTA_INPUT_TESTE.getValor(), sufixo);
+    this.descompactador.descompactar(
+      Constantes.PASTA_INPUT.getValor().concat(nomeArquivo),
+      Constantes.PASTA_INPUT.getValor(),
+      sufixo
+    );
     converterParaCsv(nomeArquivo);
   }
 

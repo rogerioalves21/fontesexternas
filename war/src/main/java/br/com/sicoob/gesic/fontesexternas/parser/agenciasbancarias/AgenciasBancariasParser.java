@@ -56,7 +56,7 @@ public class AgenciasBancariasParser implements FontesExternasParser {
   private File obterArquivo(String nomeArquivo) throws IOException {
     if (arquivo == null) {
       LOG.debug("Abrindo o arquivo " + nomeArquivo);
-      arquivo = new File(Constantes.PASTA_INPUT_TESTE.getValor().concat(nomeArquivo.replaceAll(".xls", ".csv")));
+      arquivo = new File(Constantes.PASTA_INPUT.getValor().concat(nomeArquivo.replaceAll(".xls", ".csv")));
       if (!arquivo.exists()) {
         arquivo.createNewFile();
       }
@@ -127,7 +127,7 @@ public class AgenciasBancariasParser implements FontesExternasParser {
       AgenciasBancariasModel schema = getSchema();
 
       // Abre o arquivoExcel
-      File arquivoExcel = new File(Constantes.PASTA_INPUT_TESTE.getValor().concat(nomeArquivo));
+      File arquivoExcel = new File(Constantes.PASTA_INPUT.getValor().concat(nomeArquivo));
       FileInputStream input_document = new FileInputStream(arquivoExcel);
 
       // Abre o xsl
@@ -279,11 +279,11 @@ public class AgenciasBancariasParser implements FontesExternasParser {
     String arquivoUTF = arquivoCSV.replaceAll(".csv", "_Parse.csv");
     LOG.debug(">> " + arquivoUTF);
     int tamanhoDoBuffer = (int) MEG;
-    File arquivo = new File(Constantes.PASTA_INPUT_TESTE.getValor().concat(arquivoUTF));
+    File arquivo = new File(Constantes.PASTA_INPUT.getValor().concat(arquivoUTF));
     arquivo.createNewFile();
     FileWriterWithEncoding writer = new FileWriterWithEncoding(arquivo, Charsets.UTF_8, Boolean.FALSE);
     BufferedWriter bufferedWriter = new BufferedWriter(writer, tamanhoDoBuffer);
-    FileReader fr = new FileReader(Constantes.PASTA_INPUT_TESTE.getValor().concat(arquivoCSV));
+    FileReader fr = new FileReader(Constantes.PASTA_INPUT.getValor().concat(arquivoCSV));
     BufferedReader br = new BufferedReader(fr);
     String linha;
     while ((linha = br.readLine()) != null) {
