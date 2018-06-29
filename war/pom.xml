@@ -67,8 +67,7 @@
         <dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
-            <version>2.6.2-jaxb-1.0.6</version>
-            <!-- scope>provided</scope -->
+            <version>2.12.0</version>
         </dependency>
         <dependency>
             <groupId>xml-apis</groupId>
@@ -103,9 +102,14 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.4</version>
+            <version>4.5.2</version>
             <!-- scope>provided</scope -->
         </dependency>
+        <dependency>
+    <groupId>xml-apis</groupId>
+    <artifactId>xml-apis</artifactId>
+    <version>1.4.01</version>
+</dependency>
     </dependencies>
     
     <!-- build>

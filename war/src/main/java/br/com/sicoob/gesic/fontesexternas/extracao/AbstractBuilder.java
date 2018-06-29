@@ -117,7 +117,7 @@ public abstract class AbstractBuilder {
 
       // abre o inputstream da conexao http
       try (InputStream inputStream = httpConn.getInputStream()) {
-        String saveFilePath = Constantes.PASTA_INPUT.getValor().concat(File.separator + fileName);
+        String saveFilePath = Constantes.PASTA_INPUT_TESTE.getValor().concat(File.separator + fileName);
 
         // abre o outputstream do arquivo salvo
         try (FileOutputStream outputStream = new FileOutputStream(saveFilePath)) {
@@ -163,7 +163,7 @@ public abstract class AbstractBuilder {
 
       // abre o inputstream da conexao http
       try (InputStream inputStream = httpConn.getInputStream()) {
-        String saveFilePath = Constantes.PASTA_INPUT.getValor().concat(File.separator + fileName.replaceAll(".ZIP", sufixo));
+        String saveFilePath = Constantes.PASTA_INPUT_TESTE.getValor().concat(File.separator + fileName.replaceAll(".ZIP", sufixo));
 
         // abre o outputstream do arquivo salvo
         try (FileOutputStream outputStream = new FileOutputStream(saveFilePath)) {
@@ -189,8 +189,8 @@ public abstract class AbstractBuilder {
    * @throws java.io.IOException Erro ao converter o arquivo.
    */
   protected void descompactar(String nomeArquivo) throws IOException {
-    this.descompactador.descompactar(Constantes.PASTA_INPUT.getValor().concat(nomeArquivo),
-            Constantes.PASTA_INPUT.getValor(), StandardCharsets.ISO_8859_1);
+    this.descompactador.descompactar(Constantes.PASTA_INPUT_TESTE.getValor().concat(nomeArquivo),
+            Constantes.PASTA_INPUT_TESTE.getValor(), StandardCharsets.ISO_8859_1);
     converterParaCsv(nomeArquivo);
   }
 
@@ -202,8 +202,8 @@ public abstract class AbstractBuilder {
    * @throws java.io.IOException Erro ao converter o arquivo.
    */
   protected void descompactar(String nomeArquivo, String sufixo) throws IOException {
-    this.descompactador.descompactar(Constantes.PASTA_INPUT.getValor().concat(nomeArquivo),
-            Constantes.PASTA_INPUT.getValor(), sufixo);
+    this.descompactador.descompactar(Constantes.PASTA_INPUT_TESTE.getValor().concat(nomeArquivo),
+            Constantes.PASTA_INPUT_TESTE.getValor(), sufixo);
     converterParaCsv(nomeArquivo);
   }
 

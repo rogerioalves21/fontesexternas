@@ -22,8 +22,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -57,7 +55,8 @@ public class AgenciasBancariasParser implements FontesExternasParser {
    */
   private File obterArquivo(String nomeArquivo) throws IOException {
     if (arquivo == null) {
-      arquivo = new File(Constantes.PASTA_INPUT.getValor().concat(nomeArquivo.replaceAll(".xls", ".csv")));
+      LOG.debug("Abrindo o arquivo " + nomeArquivo);
+      arquivo = new File(Constantes.PASTA_INPUT_TESTE.getValor().concat(nomeArquivo.replaceAll(".xls", ".csv")));
       if (!arquivo.exists()) {
         arquivo.createNewFile();
       }
@@ -73,6 +72,7 @@ public class AgenciasBancariasParser implements FontesExternasParser {
    */
   private void fecharRecursos(FileWriter writer, BufferedWriter bufferedWriter) {
     try {
+      LOG.debug("Fechando os recursos de arquivo");
       if (bufferedWriter != null) {
         bufferedWriter.flush();
         bufferedWriter.close();
@@ -82,7 +82,7 @@ public class AgenciasBancariasParser implements FontesExternasParser {
         writer.close();
       }
     } catch (IOException excecao) {
-      SicoobLoggerPadrao.getInstance(getClass()).erro(excecao, "Erro ao fechar o arquivo");
+      LOG.erro(excecao, "Erro ao fechar o arquivo");
     }
   }
 
@@ -93,6 +93,7 @@ public class AgenciasBancariasParser implements FontesExternasParser {
    * @throws FileNotFoundException Schema nao encontrado.
    */
   private AgenciasBancariasModel getSchema() throws FileNotFoundException {
+    LOG.debug("Obtendo o Schema " + SCHEMA_NAME);
     ClassLoader tccl = Thread.currentThread().getContextClassLoader();
     InputStream inputStream = tccl.getResourceAsStream(PATH.concat(SCHEMA_NAME));
     if (inputStream == null) {
@@ -126,7 +127,7 @@ public class AgenciasBancariasParser implements FontesExternasParser {
       AgenciasBancariasModel schema = getSchema();
 
       // Abre o arquivoExcel
-      File arquivoExcel = new File(Constantes.PASTA_INPUT.getValor().concat(nomeArquivo));
+      File arquivoExcel = new File(Constantes.PASTA_INPUT_TESTE.getValor().concat(nomeArquivo));
       FileInputStream input_document = new FileInputStream(arquivoExcel);
 
       // Abre o xsl
@@ -179,8 +180,7 @@ public class AgenciasBancariasParser implements FontesExternasParser {
         contadorLinhas++;
       }
     } catch (IOException | EncryptedDocumentException excecao) {
-      LOG.alerta(excecao, "Erro ao converter o arquivo");
-      Logger.getLogger(AgenciasBancariasParser.class.getName()).log(Level.SEVERE, "Arquivo nao convertido!", excecao);
+      LOG.alerta(excecao, "Arquivo nao convertido!");
       throw new FileNotFoundException("Arquivo nao convertido ou nao encontrado");
     } finally {
       fecharRecursos(writer, bufferedWriter);
@@ -188,10 +188,10 @@ public class AgenciasBancariasParser implements FontesExternasParser {
 
     // Cria o arquivo com encondig correto
     try {
-      Logger.getLogger(AgenciasBancariasParser.class.getName()).log(Level.INFO, "CRIANDO O ARQUIVO COM ENCONDING CORRETO");
+      LOG.debug("Criando o arquivo com o enconding correto UTF8!");
       criarArquivoUTF8(nomeArquivo.replaceAll(".xls", ".csv"));
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (IOException excecao) {
+      LOG.alerta(excecao, "Erro ao replicar o arquivo com o encoding correto!");
     }
   }
 
@@ -256,7 +256,7 @@ public class AgenciasBancariasParser implements FontesExternasParser {
 
   /**
    * Formata o numero da cooperativa completando com zeros a esquerda Total de
-   * digitos igual a 4
+   * digitos igual a 4.
    *
    * @param idInstituicao
    * @return Numero da Instituicao formatado
@@ -268,16 +268,22 @@ public class AgenciasBancariasParser implements FontesExternasParser {
     return numeroFormatado;
   }
 
+  /**
+   * Cria o arquivo no formato UTF8.
+   * 
+   * @param arquivoCSV O arquivo csv.
+   * @throws IOException Erro ao ler ou gravar o arquivo.
+   */
   private void criarArquivoUTF8(String arquivoCSV) throws IOException {
-    Logger.getLogger(AgenciasBancariasParser.class.getName()).log(Level.INFO, ">> " + arquivoCSV);
+    LOG.debug(">> " + arquivoCSV);
     String arquivoUTF = arquivoCSV.replaceAll(".csv", "_Parse.csv");
-    Logger.getLogger(AgenciasBancariasParser.class.getName()).log(Level.INFO, ">> " + arquivoUTF);
+    LOG.debug(">> " + arquivoUTF);
     int tamanhoDoBuffer = (int) MEG;
-    File arquivo = new File(Constantes.PASTA_INPUT.getValor().concat(arquivoUTF));
+    File arquivo = new File(Constantes.PASTA_INPUT_TESTE.getValor().concat(arquivoUTF));
     arquivo.createNewFile();
     FileWriterWithEncoding writer = new FileWriterWithEncoding(arquivo, Charsets.UTF_8, Boolean.FALSE);
     BufferedWriter bufferedWriter = new BufferedWriter(writer, tamanhoDoBuffer);
-    FileReader fr = new FileReader(Constantes.PASTA_INPUT.getValor().concat(arquivoCSV));
+    FileReader fr = new FileReader(Constantes.PASTA_INPUT_TESTE.getValor().concat(arquivoCSV));
     BufferedReader br = new BufferedReader(fr);
     String linha;
     while ((linha = br.readLine()) != null) {

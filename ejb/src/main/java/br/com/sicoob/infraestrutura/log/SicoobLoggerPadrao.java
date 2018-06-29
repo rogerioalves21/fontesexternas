@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  */
 public class SicoobLoggerPadrao {
 	
-	private final Logger log = Logger.getLogger(SicoobLoggerPadrao.class.getName());
+	private static Class clazze;
 	private static final SicoobLoggerPadrao INSTANCE = new SicoobLoggerPadrao();
 	
 	/**
@@ -19,6 +19,7 @@ public class SicoobLoggerPadrao {
 	 * @param clazz Classe a ser logada.
 	 */
 	public static SicoobLoggerPadrao getInstance(Class clazz) {
+	  clazze = clazz;
 		return INSTANCE;
 	}
 	
@@ -28,7 +29,7 @@ public class SicoobLoggerPadrao {
 	 * @param message Mensagem.
 	 */
 	public void debug(String message) {
-		log.log(Level.WARNING, message);
+		Logger.getLogger(clazze.getName()).log(Level.WARNING, message);
 	}
 	
 	/**
@@ -38,7 +39,7 @@ public class SicoobLoggerPadrao {
 	 * @param message Mensagem.
 	 */
 	public void alerta(Exception excecao, String message) {
-		log.log(Level.SEVERE, message, excecao);
+		Logger.getLogger(clazze.getName()).log(Level.SEVERE, message, excecao);
 	}
 	
 	/**
@@ -48,7 +49,7 @@ public class SicoobLoggerPadrao {
 	 * @param message Mensagem.
 	 */
 	public void erro(Exception excecao, String message) {
-    log.log(Level.SEVERE, message, excecao);		
+    Logger.getLogger(clazze.getName()).log(Level.SEVERE, message, excecao);		
 	}
 	
 	/**
@@ -58,7 +59,7 @@ public class SicoobLoggerPadrao {
 	 * @param message Mensagem.
 	 */
 	public void info(String message) {
-		log.info(message);
+		Logger.getLogger(clazze.getName()).info(message);
 	}
 	
 }
