@@ -107,5 +107,22 @@
             <!-- scope>provided</scope -->
         </dependency>
     </dependencies>
+    
+    <!-- build>
+		  <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+		  <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+
+		  <testResources>
+			 <testResource>
+			   <directory>${project.basedir}/src/test/resources</directory>
+			 </testResource>
+      </testResources>
+
+		  <resources>
+			 <resource>
+			   <directory>${project.basedir}/src/main/resources</directory>
+			 </resource>
+		  </resources>
+		</build -->
 
 </project>

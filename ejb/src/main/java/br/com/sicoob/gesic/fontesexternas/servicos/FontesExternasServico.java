@@ -1,6 +1,5 @@
 package br.com.sicoob.gesic.fontesexternas.servicos;
 
-import java.io.InputStream;
 
 import javax.ejb.Local;
 import javax.naming.OperationNotSupportedException;
@@ -21,12 +20,5 @@ public interface FontesExternasServico {
      * @param nomeArquivoLocal Path do arquivo local.
      */
     void salvarArquivoHDFS(String nomeArquivoLocal) throws OperationNotSupportedException;
-
-    /**
-     * Salva o arquivo em pasta local.
-     * 
-     * @param inputStream Bytes.
-     */
-    void salvarArquivoLocal(InputStream inputStream);
 
 }

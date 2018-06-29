@@ -1,5 +1,6 @@
 package br.com.sicoob.infraestrutura.log;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -11,7 +12,6 @@ public class SicoobLoggerPadrao {
 	
 	private final Logger log = Logger.getLogger(SicoobLoggerPadrao.class.getName());
 	private static final SicoobLoggerPadrao INSTANCE = new SicoobLoggerPadrao();
-	//private static final Class clazz;
 	
 	/**
 	 * Retorna a instancia singleton.
@@ -19,22 +19,44 @@ public class SicoobLoggerPadrao {
 	 * @param clazz Classe a ser logada.
 	 */
 	public static SicoobLoggerPadrao getInstance(Class clazz) {
-		//this.clazz = clazz;
 		return INSTANCE;
 	}
 	
+	/**
+	 * Escreve a mensagem em modo debug.
+	 * 
+	 * @param message Mensagem.
+	 */
 	public void debug(String message) {
-		log.info(message);
+		log.log(Level.WARNING, message);
 	}
 	
+	/**
+	 * Escreve em modo de erro.
+	 * 
+	 * @param excecao Erro.
+	 * @param message Mensagem.
+	 */
 	public void alerta(Exception excecao, String message) {
-		
+		log.log(Level.SEVERE, message, excecao);
 	}
 	
+	/**
+	 * Escreve em modo de erro.
+	 * 
+	 * @param excecao Erro.
+	 * @param message Mensagem.
+	 */
 	public void erro(Exception excecao, String message) {
-		
+    log.log(Level.SEVERE, message, excecao);		
 	}
 	
+	/**
+	 * Escreve em modo de informacao.
+	 * 
+	 * @param excecao Erro.
+	 * @param message Mensagem.
+	 */
 	public void info(String message) {
 		log.info(message);
 	}

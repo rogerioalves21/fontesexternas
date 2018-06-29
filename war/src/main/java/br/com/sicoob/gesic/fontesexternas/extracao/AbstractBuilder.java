@@ -15,7 +15,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Logger;
 import javax.naming.OperationNotSupportedException;
 
 /**
@@ -112,9 +111,9 @@ public abstract class AbstractBuilder {
       // extrai o nome do arquivo da url
       fileName = fileURL.substring(fileURL.lastIndexOf("/") + 1, fileURL.length());
 
-      Logger.getLogger(Builder.class.getName()).info("Content-Type = ".concat(contentType));
-      Logger.getLogger(Builder.class.getName()).info("Content-Length = ".concat(contentLength + ""));
-      Logger.getLogger(Builder.class.getName()).info("fileName = ".concat(fileName));
+      LOG.info("Content-Type = ".concat(contentType));
+      LOG.info("Content-Length = ".concat(contentLength + ""));
+      LOG.info("fileName = ".concat(fileName));
 
       // abre o inputstream da conexao http
       try (InputStream inputStream = httpConn.getInputStream()) {
@@ -130,10 +129,8 @@ public abstract class AbstractBuilder {
         }
       }
       LOG.debug("Download feito com sucesso!");
-      Logger.getLogger(Builder.class.getName()).info("Download feito com sucesso!");
     } else {
       LOG.debug("No file to download. Server replied HTTP code: ".concat(responseCode + ""));
-      Logger.getLogger(Builder.class.getName()).info("No file to download. Server replied HTTP code: ".concat(responseCode + ""));
       throw new IOException("O servidor HTTP nao responde, HTTP code: ".concat(responseCode + ""));
     }
     httpConn.disconnect();
@@ -160,9 +157,9 @@ public abstract class AbstractBuilder {
       // extrai o nome do arquivo da url
       fileName = fileURL.substring(fileURL.lastIndexOf("/") + 1, fileURL.length());
 
-      Logger.getLogger(Builder.class.getName()).info("Content-Type = ".concat(contentType));
-      Logger.getLogger(Builder.class.getName()).info("Content-Length = ".concat(contentLength + ""));
-      Logger.getLogger(Builder.class.getName()).info("fileName = ".concat(fileName));
+      LOG.info("Content-Type = ".concat(contentType));
+      LOG.info("Content-Length = ".concat(contentLength + ""));
+      LOG.info("fileName = ".concat(fileName));
 
       // abre o inputstream da conexao http
       try (InputStream inputStream = httpConn.getInputStream()) {
@@ -177,9 +174,9 @@ public abstract class AbstractBuilder {
           }
         }
       }
-      Logger.getLogger(Builder.class.getName()).info("Download feito com sucesso!");
+      LOG.info("Download feito com sucesso!");
     } else {
-      Logger.getLogger(Builder.class.getName()).info("No file to download. Server replied HTTP code: ".concat(responseCode + ""));
+      LOG.info("No file to download. Server replied HTTP code: ".concat(responseCode + ""));
       throw new IOException("O servidor HTTP nao responde, HTTP code: ".concat(responseCode + ""));
     }
     httpConn.disconnect();

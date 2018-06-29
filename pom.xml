@@ -15,9 +15,9 @@
     </parent -->
 
     <modules>
-        <module>ejb</module>
-        <module>war</module>
-		<module>ear</module>
+      <module>ejb</module>
+      <module>war</module>
+		  <module>ear</module>
     </modules>
 
     <build>

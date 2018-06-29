@@ -7,6 +7,11 @@ package br.com.bancoob.excecao;
  */
 public class BancoobRuntimeException extends RuntimeException {
 	
+	/**
+	 * Construtor.
+	 * 
+	 * @param excecao Erro a ser tratado.
+	 */
 	public BancoobRuntimeException(Exception excecao) {
 		super(excecao);
 	}

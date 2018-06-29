@@ -2,8 +2,10 @@ package br.com.sicoob.gesic.fontesexternas.servicos.ejb;
 
 import br.com.sicoob.gesic.fontesexternas.hadoop.HadoopHDFSOperacoes;
 import br.com.sicoob.gesic.fontesexternas.servicos.FontesExternasServico;
-import java.io.InputStream;
+
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.naming.OperationNotSupportedException;
 
@@ -13,6 +15,7 @@ import javax.naming.OperationNotSupportedException;
  * @author Rogerio Alves Rodrigues
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class FontesExternasServicoEJB implements FontesExternasServico {
 
   @Inject
@@ -24,14 +27,6 @@ public class FontesExternasServicoEJB implements FontesExternasServico {
   @Override
   public void salvarArquivoHDFS(String nomeArquivoLocal) throws OperationNotSupportedException {
     operacoes.escreverNaPasta(nomeArquivoLocal);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void salvarArquivoLocal(InputStream inputStream) {
-
   }
 
 }
