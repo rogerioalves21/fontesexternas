@@ -203,7 +203,7 @@ public abstract class AbstractBuilder {
     inputStream.close();
     
     // descompacta o arquivo
-    this.descompactador.descompactar(Constantes.PASTA_INPUT.getValor().concat(fileName),
+    this.descompactador.descompactar(fileName, Constantes.PASTA_INPUT.getValor().concat(fileName),
             Constantes.PASTA_INPUT.getValor(), StandardCharsets.ISO_8859_1);
   }
 
