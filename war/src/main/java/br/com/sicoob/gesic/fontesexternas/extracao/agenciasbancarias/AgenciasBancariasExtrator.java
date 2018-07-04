@@ -4,6 +4,7 @@ import br.com.sicoob.gesic.fontesexternas.anotacoes.Extratora;
 import br.com.sicoob.gesic.fontesexternas.anotacoes.TipoExtratora;
 import br.com.sicoob.gesic.fontesexternas.extracao.Extrator;
 import javax.naming.OperationNotSupportedException;
+import br.com.sicoob.gesic.fontesexternas.util.PropertiesUtil;
 
 /**
  * Classe responsavel por extrair os dados do site do banco central de agencias bancarias.
@@ -22,7 +23,7 @@ public class AgenciasBancariasExtrator implements Extrator {
   public String extrair() throws OperationNotSupportedException {
     return new Builder()
             .configurarWebClient()
-            .acessarURL(ENDPOINT)
+            .acessarURL(PropertiesUtil.getInstance().obter("agenciasbancarias.host"))
             .extrairArquivo();
   }
 

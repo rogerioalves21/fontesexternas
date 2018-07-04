@@ -74,7 +74,7 @@ public class DownloadTest {
   /**
    * 
    */
-  @Testcd 
+  @Test
   public void deveObterArquivoDoIbge() {
     Extrator extrator = new IBGEExtrator();
     try {

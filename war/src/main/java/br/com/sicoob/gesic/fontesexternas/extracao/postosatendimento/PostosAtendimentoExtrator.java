@@ -4,6 +4,7 @@ import br.com.sicoob.gesic.fontesexternas.anotacoes.Extratora;
 import br.com.sicoob.gesic.fontesexternas.anotacoes.TipoExtratora;
 import br.com.sicoob.gesic.fontesexternas.extracao.Extrator;
 import javax.naming.OperationNotSupportedException;
+import br.com.sicoob.gesic.fontesexternas.util.PropertiesUtil;
 
 /**
  * Extrator do arquivo de "Postos de atendimentos coopeartivo e bancario".
@@ -22,7 +23,7 @@ public class PostosAtendimentoExtrator implements Extrator {
   public String extrair() throws OperationNotSupportedException {
     return new Builder()
             .configurarWebClient()
-            .acessarURL(ENDPOINT)
+            .acessarURL(PropertiesUtil.getInstance().obter("postosatendimento.host"))
             .extrairArquivo();
   }
 

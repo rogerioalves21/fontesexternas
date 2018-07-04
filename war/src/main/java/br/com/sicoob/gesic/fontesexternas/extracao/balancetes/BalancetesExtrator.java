@@ -4,6 +4,7 @@ import br.com.sicoob.gesic.fontesexternas.anotacoes.Extratora;
 import br.com.sicoob.gesic.fontesexternas.anotacoes.TipoExtratora;
 import br.com.sicoob.gesic.fontesexternas.extracao.Extrator;
 import javax.naming.OperationNotSupportedException;
+import br.com.sicoob.gesic.fontesexternas.util.PropertiesUtil;
 
 /**
  * Implementacao para o download do arquivo de "Balancetes e balancos patrimoniais".
@@ -22,7 +23,7 @@ public class BalancetesExtrator implements Extrator {
   public String extrair() throws OperationNotSupportedException {
     return new Builder()
             .configurarWebClient()
-            .acessarURL(ENDPOINT)
+            .acessarURL(PropertiesUtil.getInstance().obter("balancetes.host"))
             .extrairArquivo();
   }
 

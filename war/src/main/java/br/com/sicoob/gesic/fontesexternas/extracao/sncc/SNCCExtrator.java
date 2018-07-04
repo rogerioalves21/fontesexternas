@@ -4,6 +4,7 @@ import br.com.sicoob.gesic.fontesexternas.anotacoes.Extratora;
 import br.com.sicoob.gesic.fontesexternas.anotacoes.TipoExtratora;
 import br.com.sicoob.gesic.fontesexternas.extracao.Extrator;
 import javax.naming.OperationNotSupportedException;
+import br.com.sicoob.gesic.fontesexternas.util.PropertiesUtil;
 
 /**
  * Implementacao responsavel por obter o arquivo de "Cooperativas de Credito".
@@ -22,7 +23,7 @@ public class SNCCExtrator implements Extrator {
   public String extrair() throws OperationNotSupportedException {
     return new Builder()
             .configurarWebClient()
-            .acessarURL(ENDPOINT)
+            .acessarURL(PropertiesUtil.getInstance().obter("sncc.host"))
             .extrairArquivo();
   }
 
