@@ -48,7 +48,7 @@ public class DownloadTest {
   /**
    * 
    */
-  @Test
+  //@Test
   public void deveObterArquivoDePostosDeAtendimento() {
     Extrator extrator = new PostosAtendimentoExtrator();
     try {

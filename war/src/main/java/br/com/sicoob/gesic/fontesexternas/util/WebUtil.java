@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Classe responsavel por manter os metodos utilitarios para a camada web.
  *
@@ -88,7 +90,11 @@ public class WebUtil {
     return WebUtil.toUnderline(normalizado);
   }
 
-  public static String removerUnderlineInicialEFinal(String palavra) {
-    
+  public static String removerUltimoUnderline(String coluna) {
+    return StringUtils.removeEnd(coluna, "_");
+    //if (coluna != null && coluna.length() > 0 && coluna.charAt(coluna.length() - 1) == '_') {
+      //  coluna = coluna.substring(0, coluna.length() - 1);
+    //}
+    //return coluna;
   }
 }

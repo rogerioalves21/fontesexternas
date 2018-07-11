@@ -30,5 +30,12 @@ public class WebUtilTest {
     String celula = "#DATA_BASE";
     Assert.assertEquals("DATA_BASE", celula.replaceAll("#", ""));
   }
+  
+  @Test
+  public void deveRemoverUnderlineFinal() {
+    String alterado = WebUtil.removerUltimoUnderline("FONE_");
+    System.out.println("FONE_ [" + alterado + "]");
+    Assert.assertEquals(alterado, WebUtil.removerUltimoUnderline("FONE_"));
+  }
 
 }

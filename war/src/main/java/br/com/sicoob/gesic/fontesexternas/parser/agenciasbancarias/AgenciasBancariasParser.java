@@ -153,20 +153,19 @@ public class AgenciasBancariasParser implements FontesExternasParser {
         // Cabecalho
         if (contadorLinhas == schema.getCabecalho()) {
           Integer contadorColunas = 0;
-//          schema
-  //          .getColunas()
-    //          .stream()
-      //          .map((coluna) -> celulas.get(coluna.getNumero())).forEachOrdered((itemCell) -> {
           for (AgenciasBancariasColuna coluna : schema.getColunas()) {
             Cell itemCell = celulas.get(coluna.getNumero());
             if (contadorColunas.intValue() == schema.getColunas().size()-1) {
-              linhaCabecalho.append(itemCell.getStringCellValue());
+              linhaCabecalho
+                .append(WebUtil.removerUltimoUnderline(
+                  WebUtil.removerCaracteresEspeciais(itemCell.getStringCellValue())));
             } else {
-              linhaCabecalho.append(itemCell.getStringCellValue()).append(PONTO_E_VIRGULA);
+              linhaCabecalho
+                .append(WebUtil.removerUltimoUnderline(
+                  WebUtil.removerCaracteresEspeciais(itemCell.getStringCellValue()))).append(PONTO_E_VIRGULA);
             }
             contadorColunas++;
           }
-          //});
           bufferedWriter.write(WebUtil.removerCaracteresEspeciais(linhaCabecalho.toString()));
           bufferedWriter.newLine();
         }
