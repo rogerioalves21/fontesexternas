@@ -152,9 +152,21 @@ public class AgenciasBancariasParser implements FontesExternasParser {
 
         // Cabecalho
         if (contadorLinhas == schema.getCabecalho()) {
-          schema.getColunas().stream().map((coluna) -> celulas.get(coluna.getNumero())).forEachOrdered((itemCell) -> {
-            linhaCabecalho.append(itemCell.getStringCellValue()).append(PONTO_E_VIRGULA);
-          });
+          Integer contadorColunas = 0;
+//          schema
+  //          .getColunas()
+    //          .stream()
+      //          .map((coluna) -> celulas.get(coluna.getNumero())).forEachOrdered((itemCell) -> {
+          for (AgenciasBancariasColuna coluna : schema.getColunas()) {
+            Cell itemCell = celulas.get(coluna.getNumero());
+            if (contadorColunas.intValue() == schema.getColunas().size()-1) {
+              linhaCabecalho.append(itemCell.getStringCellValue());
+            } else {
+              linhaCabecalho.append(itemCell.getStringCellValue()).append(PONTO_E_VIRGULA);
+            }
+            contadorColunas++;
+          }
+          //});
           bufferedWriter.write(WebUtil.removerCaracteresEspeciais(linhaCabecalho.toString()));
           bufferedWriter.newLine();
         }
@@ -163,17 +175,31 @@ public class AgenciasBancariasParser implements FontesExternasParser {
         if (contadorLinhas >= schema.getInicia() && celulas.size() == schema.getColunas().size()) {
           final StringBuilder linhaCSV = new StringBuilder();
           linhaCSV.append(WebUtil.getDataFromNomeArquivo(nomeArquivo)).append(PONTO_E_VIRGULA);
-          schema.getColunas().forEach((coluna) -> {
+          Integer contadorColunas = 0;
+          for (AgenciasBancariasColuna coluna : schema.getColunas()) {
+          //schema.getColunas().forEach((coluna) -> {
             Cell itemCell = celulas.get(coluna.getNumero());
-            switch (itemCell.getCellType()) {
+            if (contadorColunas.intValue() == schema.getColunas().size()-1) {
+              switch (itemCell.getCellType()) {
               case Cell.CELL_TYPE_STRING:
-                linhaCSV.append(tratarFormatoString(itemCell, coluna)).append(PONTO_E_VIRGULA);
+                linhaCSV.append(tratarFormatoString(itemCell, coluna));
                 break;
               case Cell.CELL_TYPE_NUMERIC:
-                linhaCSV.append(tratarFormatoNumero(itemCell, coluna)).append(PONTO_E_VIRGULA);
+                linhaCSV.append(tratarFormatoNumero(itemCell, coluna));
                 break;
+              }
+            } else {
+              switch (itemCell.getCellType()) {
+                case Cell.CELL_TYPE_STRING:
+                  linhaCSV.append(tratarFormatoString(itemCell, coluna)).append(PONTO_E_VIRGULA);
+                  break;
+                case Cell.CELL_TYPE_NUMERIC:
+                  linhaCSV.append(tratarFormatoNumero(itemCell, coluna)).append(PONTO_E_VIRGULA);
+                  break;
+              }
             }
-          });
+            contadorColunas++;
+          }
           bufferedWriter.write(linhaCSV.toString());
           bufferedWriter.newLine();
         }

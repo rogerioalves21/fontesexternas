@@ -35,7 +35,7 @@ public class DownloadTest {
   /**
    * 
    */
-  @Test
+  //@Test
   public void deveObterArquivoDeSNCC() {
     Extrator extrator = new SNCCExtrator();
     try {
@@ -61,7 +61,7 @@ public class DownloadTest {
   /**
    * 
    */
-  @Test
+  //@Test
   public void deveObterArquivoDeBalancetes() {
     Extrator extrator = new BalancetesExtrator();
     try {
@@ -74,7 +74,7 @@ public class DownloadTest {
   /**
    * 
    */
-  @Test
+  //@Test
   public void deveObterArquivoDoIbge() {
     Extrator extrator = new IBGEExtrator();
     try {

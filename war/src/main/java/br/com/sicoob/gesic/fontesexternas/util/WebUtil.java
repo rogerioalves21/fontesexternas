@@ -88,4 +88,7 @@ public class WebUtil {
     return WebUtil.toUnderline(normalizado);
   }
 
+  public static String removerUnderlineInicialEFinal(String palavra) {
+    
+  }
 }
